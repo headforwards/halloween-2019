@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public float minDistance = 5f;
+
     public float maxDistance = 50f;
 
     public float minInterval = 0.1f;
@@ -31,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
             pos.z = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
 
             var enemy = Resources.Load("Enemy") as GameObject;
+            
             var script = enemy.GetComponent<EnemyAI>();
             script.Target = gameObject.transform;
 
