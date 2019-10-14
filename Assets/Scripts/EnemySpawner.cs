@@ -33,7 +33,10 @@ public class EnemySpawner : MonoBehaviour
 
             var enemy = Resources.Load("Enemy") as GameObject;
             
+            var playerHealth = gameObject.GetComponent<PlayerHealth>();
             var script = enemy.GetComponent<EnemyAI>();
+            var enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.playerHealth = playerHealth;
             script.Target = gameObject.transform;
 
             GameObject.Instantiate(enemy, pos, Quaternion.identity);

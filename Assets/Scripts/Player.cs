@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
        RaycastHit hit;
        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxDistance)) {
  
-           var enemy = hit.collider.gameObject.GetComponentInParent<Enemy>();
+           var enemy = hit.collider.gameObject.GetComponent<Enemy>();
 
            if (enemy == null) {
                return;

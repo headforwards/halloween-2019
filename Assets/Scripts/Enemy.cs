@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     public float Health = 100f;
+    public float AttackDelay = 1.5f;
     public Image HealthBar;
     public Canvas HealthBarCanvas;
+    public PlayerHealth playerHealth;
 
     void Start()
     {
@@ -23,5 +26,17 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        StartCoroutine(Attack());
+    }
+
+    IEnumerator Attack(){
+        yield return new WaitForSeconds(AttackDelay);
+        playerHealth.Attacked(5f);
+        yield return new WaitForSeconds(AttackDelay);
+        StartCoroutine(Attack());
     }
 }
