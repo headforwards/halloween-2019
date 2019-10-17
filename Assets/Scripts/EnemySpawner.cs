@@ -24,7 +24,8 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     IEnumerator Spawn()
     {
-        if (enemies++ <= maxEnemies)
+        enemies++;
+        if (enemies <= maxEnemies)
         {
             var pos = gameObject.transform.position;
 

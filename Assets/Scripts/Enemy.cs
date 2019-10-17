@@ -6,6 +6,10 @@ public class Enemy : MonoBehaviour
 {
     public float Health = 100f;
     public float AttackDelay = 1.5f;
+
+    public float AttackStrength = 5.0f;
+
+    public float AttackSpeed = .5f;
     public Image HealthBar;
     public Canvas HealthBarCanvas;
     public PlayerHealth playerHealth;
@@ -42,11 +46,14 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
-        animator.SetTrigger("death");
         HealthBarCanvas.enabled = false;
         enemyCollider.enabled = false;
-        agent.enabled = false;
+        agent.isStopped = true;
+
+        animator.SetTrigger("death");
         yield return new WaitForSeconds(pauseBeforeDeath);
+        animator.SetTrigger("sink");
+        yield return new WaitForSeconds(2.0f);
         Destroy(gameObject);
     }
 
@@ -57,9 +64,14 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attack(){
         animator.SetTrigger("attack");
-        yield return new WaitForSeconds(AttackDelay);
+        yield return new WaitForSeconds(AttackSpeed);
+        int attackAnimationCount = 5;
+        for(int attackCount = 0; attackCount <= attackAnimationCount; attackCount++)
+        {
+            playerHealth.Attacked(AttackStrength / attackAnimationCount);
+            yield return new WaitForSeconds(AttackSpeed);
+        }
         animator.SetTrigger("idle");
-        playerHealth.Attacked(5f);
         yield return new WaitForSeconds(AttackDelay);
         StartCoroutine(Attack());
     }

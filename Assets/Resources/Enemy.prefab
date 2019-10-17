@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &173810702552625976
 CanvasRenderer:
@@ -124,7 +124,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -163,9 +163,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   AttackDelay: 1.5
+  AttackStrength: 5
+  AttackSpeed: 0.5
   HealthBar: {fileID: 229415542583738450}
   HealthBarCanvas: {fileID: 1690500267520932174}
   playerHealth: {fileID: 0}
+  pauseBeforeDeath: 3
 --- !u!54 &4786454142025423187
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -225,7 +228,7 @@ RectTransform:
   m_GameObject: {fileID: 2525003213773541142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.003801724, y: 0.003801724, z: 0.003801724}
   m_Children:
   - {fileID: 1768139566829720186}
   m_Father: {fileID: 159107796824248956}
@@ -233,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.2}
-  m_SizeDelta: {x: 100, y: 10}
+  m_AnchoredPosition: {x: 0, y: 1.855}
+  m_SizeDelta: {x: 50, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1690500267520932174
 Canvas:
@@ -347,7 +350,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3404341563706550678
 CanvasRenderer:
@@ -408,7 +411,7 @@ PrefabInstance:
     - target: {fileID: 7989117111706264604, guid: 3c706d94a6ab84252a36a18377a9935f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7989117111706264604, guid: 3c706d94a6ab84252a36a18377a9935f,
         type: 3}
