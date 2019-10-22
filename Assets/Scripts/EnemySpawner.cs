@@ -13,8 +13,6 @@ public class EnemySpawner : MonoBehaviour
 
     public int maxEnemies = 100;
 
-    private int enemies = 0;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,16 +22,16 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     IEnumerator Spawn()
     {
-        enemies++;
-        if (enemies <= maxEnemies)
+        if (GameState.enemeyCount <= maxEnemies && GameState.isPlaying)
         {
+            GameState.enemeyCount++;
             var pos = gameObject.transform.position;
 
             pos.x = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
             pos.z = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
 
             var enemy = Resources.Load("Enemy") as GameObject;
-            
+
             var playerHealth = gameObject.GetComponent<PlayerHealth>();
             var script = enemy.GetComponent<EnemyAI>();
             var enemyScript = enemy.GetComponent<Enemy>();
@@ -41,10 +39,9 @@ public class EnemySpawner : MonoBehaviour
             script.Target = gameObject.transform;
 
             GameObject.Instantiate(enemy, pos, Quaternion.identity);
-
-            yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
-
-            StartCoroutine(Spawn());
         }
+
+        yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
+        StartCoroutine(Spawn());
     }
 }

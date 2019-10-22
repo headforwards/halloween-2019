@@ -10,14 +10,18 @@ public class Player : MonoBehaviour
     {
        RaycastHit hit;
        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxDistance)) {
- 
-           var enemy = hit.collider.gameObject.GetComponent<Enemy>();
 
-           if (enemy == null) {
-               return;
+           var tag = hit.collider.gameObject.tag;
+
+           if (tag == "Enemy") {
+               var enemy = hit.collider.gameObject.GetComponent<Enemy>();
+               enemy.Hit(attackStrength);
            }
-           
-           enemy.Hit(attackStrength);
+
+           if(tag == "GameController")
+           {
+               GameState.isPlaying = true;
+           }
        }
     }
 }

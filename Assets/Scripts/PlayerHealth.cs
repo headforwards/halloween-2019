@@ -14,5 +14,9 @@ public class PlayerHealth : MonoBehaviour
     public void Attacked(float attack)
     {
         Health -= attack;
+        if(Health < 1 )
+        {
+            GameState.isPlaying = false;
+        }
     }
 }

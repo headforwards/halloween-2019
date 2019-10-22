@@ -30,6 +30,27 @@ public class Enemy : MonoBehaviour
         HealthBarCanvas.enabled = false;
     }
 
+    void Update()
+    {
+        if (!GameState.isPlaying)
+        {
+            StartCoroutine(GameEnd());
+        }
+    }
+
+    IEnumerator GameEnd()
+    {
+        animator.SetTrigger("idle");
+
+        yield return new WaitForSeconds(2f);
+
+        animator.SetTrigger("sink");
+
+        yield return new WaitForSeconds(2f);
+
+        Destroy(gameObject);
+    }
+
     public void Hit(float attackPoint)
     {
         HealthBarCanvas.enabled = true;
@@ -55,6 +76,7 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("sink");
         yield return new WaitForSeconds(2.0f);
         Destroy(gameObject);
+        GameState.enemeyCount--;
     }
 
     void OnTriggerEnter(Collider collider)
@@ -62,17 +84,21 @@ public class Enemy : MonoBehaviour
         StartCoroutine(Attack());
     }
 
-    IEnumerator Attack(){
-        animator.SetTrigger("attack");
-        yield return new WaitForSeconds(AttackSpeed);
-        int attackAnimationCount = 5;
-        for(int attackCount = 0; attackCount <= attackAnimationCount; attackCount++)
+    IEnumerator Attack()
+    {
+        if (GameState.isPlaying)
         {
-            playerHealth.Attacked(AttackStrength / attackAnimationCount);
+            animator.SetTrigger("attack");
             yield return new WaitForSeconds(AttackSpeed);
+            int attackAnimationCount = 5;
+            for (int attackCount = 0; attackCount <= attackAnimationCount; attackCount++)
+            {
+                playerHealth.Attacked(AttackStrength / attackAnimationCount);
+                yield return new WaitForSeconds(AttackSpeed);
+            }
+            animator.SetTrigger("idle");
+            yield return new WaitForSeconds(AttackDelay);
+            StartCoroutine(Attack());
         }
-        animator.SetTrigger("idle");
-        yield return new WaitForSeconds(AttackDelay);
-        StartCoroutine(Attack());
     }
 }
