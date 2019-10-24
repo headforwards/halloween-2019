@@ -53,6 +53,9 @@ public class Enemy : MonoBehaviour
 
     public void Hit(float attackPoint)
     {
+        if (!GameState.isPlaying) 
+            return;
+            
         HealthBarCanvas.enabled = true;
 
         Health -= attackPoint;
@@ -76,7 +79,7 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("sink");
         yield return new WaitForSeconds(2.0f);
         Destroy(gameObject);
-        GameState.enemeyCount--;
+        GameState.enemyCount--;
     }
 
     void OnTriggerEnter(Collider collider)

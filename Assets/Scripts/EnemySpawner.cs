@@ -22,9 +22,9 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     IEnumerator Spawn()
     {
-        if (GameState.enemeyCount <= maxEnemies && GameState.isPlaying)
+        if (GameState.enemyCount <= maxEnemies && GameState.isPlaying)
         {
-            GameState.enemeyCount++;
+            GameState.enemyCount++;
             var pos = gameObject.transform.position;
 
             pos.x = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
