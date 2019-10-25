@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     public float pauseBeforeDeath = 5f;
 
     private CapsuleCollider enemyCollider;
+    private bool gameOverTriggered = false;
 
     void Start()
     {
@@ -32,8 +33,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (!GameState.isPlaying)
+        if (!GameState.isPlaying && !gameOverTriggered)
         {
+            gameOverTriggered = true;
             StartCoroutine(GameEnd());
         }
     }
@@ -42,7 +44,11 @@ public class Enemy : MonoBehaviour
     {
         animator.SetTrigger("idle");
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+
+         animator.SetTrigger("death");
+
+        yield return new WaitForSeconds(1f);
 
         animator.SetTrigger("sink");
 

@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HealthText.text = "Health: " + currentHealth.ToString();
+        HealthText.text = GameState.isPlaying ? "Health: " + currentHealth.ToString() : string.Empty;
     }
 
     public void Attacked(float attack)
@@ -25,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
             return;
 
         currentHealth -= attack;
+        
         if (currentHealth < 1)
         {
             GameState.GameOver();

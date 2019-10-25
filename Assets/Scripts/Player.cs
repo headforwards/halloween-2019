@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public double CountDown = 2000;
 
+    public float SphereCastRadius = 2f;
     private DateTime? countdownStarted = null;
 
     void Start()
@@ -20,34 +21,44 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxDistance))
+        var hits = Physics.SphereCastAll(
+            transform.position += Vector3.forward * 2,
+            SphereCastRadius,
+            transform.TransformDirection(Vector3.forward),
+            maxDistance);
+
+        if (hits?.Length > 0)
         {
+            bool gameControllerHit = false;
 
-            var tag = hit.collider.gameObject.tag;
-
-            if (tag == "Enemy")
+            foreach (var hit in hits)
             {
-                var enemy = hit.collider.gameObject.GetComponent<Enemy>();
-                enemy.Hit(attackStrength/hit.distance);
+                var tag = hit.collider.gameObject.tag;
+
+                if (tag == "Enemy")
+                {
+                    var enemy = hit.collider.gameObject.GetComponent<Enemy>();
+                    enemy.Hit(attackStrength / hit.distance);
+                }
+
+                if (tag == "GameController" && !GameState.isPlaying)
+                {
+                    if (countdownStarted == null)
+                        countdownStarted = DateTime.Now;
+
+                    var elapsed = (DateTime.Now - countdownStarted.Value).TotalMilliseconds;
+
+                    CountDownImage.fillAmount = (float)(elapsed / CountDown);
+
+                    if (elapsed >= CountDown)
+                        StartGame();
+
+                        gameControllerHit = true;
+                }
             }
 
-            if (tag == "GameController" && !GameState.isPlaying)
-            {
-                if (countdownStarted == null)
-                    countdownStarted = DateTime.Now;
-
-                var elapsed = (DateTime.Now - countdownStarted.Value).TotalMilliseconds;
-
-                CountDownImage.fillAmount = (float)(elapsed / CountDown);
-
-                if (elapsed >= CountDown)
-                    StartGame();
-            }
-            else
-            {
+            if(!gameControllerHit)
                 ResetCountDown();
-            }
         }
         else
         {

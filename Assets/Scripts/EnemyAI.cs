@@ -16,6 +16,13 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        navMeshAgent.SetDestination(Target.position);
+        if (GameState.isPlaying)
+        {
+            navMeshAgent.SetDestination(Target.position);
+        }
+        else
+        {
+            navMeshAgent.isStopped = true;
+        }
     }
 }
