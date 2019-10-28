@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float minDistance = 5f;
+    public float MaxDistance = 10f;
 
-    public float maxDistance = 50f;
+    public float MinDistance = 5f;
 
     public float minInterval = 0.1f;
 
@@ -25,10 +25,16 @@ public class EnemySpawner : MonoBehaviour
         if (GameState.enemyCount <= maxEnemies && GameState.isPlaying)
         {
             GameState.enemyCount++;
-            var pos = gameObject.transform.position;
 
-            pos.x = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
-            pos.z = Random.Range(minDistance, maxDistance) * (Random.value > 0.5f ? 1 : -1);
+            // get a random direction (360°) in radians
+            float angle = Random.Range(0.0f, Mathf.PI * 2);
+
+            // create a vector with length 1.0
+            Vector3 V = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+
+            // scale it to the desired length
+            var range = Random.Range(MinDistance, MaxDistance);
+            V *= range;
 
             var enemy = Resources.Load("Enemy") as GameObject;
 
@@ -38,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
             enemyScript.playerHealth = playerHealth;
             script.Target = gameObject.transform;
 
-            GameObject.Instantiate(enemy, pos, Quaternion.identity);
+            GameObject.Instantiate(enemy, V, Quaternion.identity);
         }
 
         yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));

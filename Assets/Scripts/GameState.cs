@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameState : MonoBehaviour
 {
@@ -18,13 +19,12 @@ public class GameState : MonoBehaviour
     void Start()
     {
         gameState = this;
-        gameState.SetSurvivalText(string.Empty);
-        Debug.Log("s");
+        gameState.Animator.SetBool("playing", true);
     }
 
     public static void GameOver()
     {
-        if(!isPlaying)
+        if (!isPlaying)
             return;
 
         isPlaying = false;
@@ -42,6 +42,8 @@ public class GameState : MonoBehaviour
         isPlaying = true;
         enemyCount = 0;
         start = DateTime.Now;
+        gameState.Animator.SetBool("playing", true);
+
     }
 
     void SetSurvivalText(string message)
@@ -49,20 +51,21 @@ public class GameState : MonoBehaviour
         if (gameState.SurvivalTime != null)
         {
             gameState.SurvivalTime.text = message;
+            gameState.Animator.SetBool("playing", false);
             StartCoroutine(ClearText());
         }
     }
 
     IEnumerator ClearText()
     {
-        Debug.Log("c");
         yield return new WaitForSeconds(DisplayScoreTime);
         if (gameState.SurvivalTime != null)
         {
-            gameState.SurvivalTime.text = string.Empty;
+            gameState.Animator.SetBool("playing", true);
         }
     }
 
-    public Text SurvivalTime;
+    public TMP_Text SurvivalTime;
 
+    public Animator Animator;
 }

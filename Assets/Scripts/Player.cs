@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         var hits = Physics.SphereCastAll(
-            transform.position += Vector3.forward * 2,
+            // transform.position += Vector3.forward * 2,
+            transform.position,
             SphereCastRadius,
             transform.TransformDirection(Vector3.forward),
             maxDistance);
@@ -53,11 +54,11 @@ public class Player : MonoBehaviour
                     if (elapsed >= CountDown)
                         StartGame();
 
-                        gameControllerHit = true;
+                    gameControllerHit = true;
                 }
             }
 
-            if(!gameControllerHit)
+            if (!gameControllerHit)
                 ResetCountDown();
         }
         else
