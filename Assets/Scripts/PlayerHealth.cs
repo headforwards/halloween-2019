@@ -6,16 +6,19 @@ public class PlayerHealth : MonoBehaviour
 
     private float currentHealth;
 
+    private BloodSplatter splatter;
+
     public Text HealthText;
 
     void Start()
     {
         currentHealth = Health;
+        splatter = GetComponentInChildren<BloodSplatter>();
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         HealthText.text = GameState.isPlaying ? "Health: " + currentHealth.ToString() : string.Empty;
     }
 
@@ -25,10 +28,12 @@ public class PlayerHealth : MonoBehaviour
             return;
 
         currentHealth -= attack;
-        
+
+        splatter.Splat();
         if (currentHealth < 1)
         {
             GameState.GameOver();
+            splatter.Clear();
             currentHealth = Health;
         }
     }
