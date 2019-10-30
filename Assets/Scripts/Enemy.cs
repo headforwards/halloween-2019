@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    private AudioSource audioSource;
+
     public float pauseBeforeDeath = 5f;
 
     private CapsuleCollider enemyCollider;
@@ -28,7 +30,26 @@ public class Enemy : MonoBehaviour
         enemyCollider = GetComponent<CapsuleCollider>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
         HealthBarCanvas.enabled = false;
+
+        if (Random.Range(0, 10) == 1)
+        {
+            audioSource.clip = Resources.Load<AudioClip>("grumble1");
+            audioSource.Play();
+        }
+        else
+        {
+            StartCoroutine(Growl());
+        }
+    }
+
+    IEnumerator Growl()
+    {
+        yield return new WaitForSeconds(Random.Range(2f, 15f));
+        audioSource.clip = Resources.Load<AudioClip>("growl1");
+        audioSource.Play();
+        StartCoroutine(Growl());
     }
 
     void Update()
@@ -46,7 +67,7 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-         animator.SetTrigger("death");
+        animator.SetTrigger("death");
 
         yield return new WaitForSeconds(1f);
 
@@ -59,9 +80,9 @@ public class Enemy : MonoBehaviour
 
     public void Hit(float attackPoint)
     {
-        if (!GameState.isPlaying) 
+        if (!GameState.isPlaying)
             return;
-            
+
         HealthBarCanvas.enabled = true;
 
         Health -= attackPoint;
@@ -80,6 +101,9 @@ public class Enemy : MonoBehaviour
         enemyCollider.enabled = false;
         agent.isStopped = true;
 
+        string clip = string.Format("die{0}", Random.Range(1, 3));
+        audioSource.clip = Resources.Load<AudioClip>(clip);
+
         animator.SetTrigger("death");
         yield return new WaitForSeconds(pauseBeforeDeath);
         animator.SetTrigger("sink");
@@ -97,6 +121,9 @@ public class Enemy : MonoBehaviour
     {
         if (GameState.isPlaying)
         {
+            string attack = string.Format("attack{0}", Random.Range(1, 4));
+            audioSource.clip = Resources.Load<AudioClip>(attack);
+            audioSource.Play();
             animator.SetTrigger("attack");
             yield return new WaitForSeconds(AttackSpeed);
             int attackAnimationCount = 5;

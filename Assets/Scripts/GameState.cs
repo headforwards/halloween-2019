@@ -27,6 +27,10 @@ public class GameState : MonoBehaviour
         if (!isPlaying)
             return;
 
+            
+        var clip = Resources.Load<AudioClip>("laugh");
+        AudioSource.PlayClipAtPoint(clip, new Vector3(0, 0, 0));
+
         isPlaying = false;
         enemyCount = 0;
 
@@ -43,7 +47,8 @@ public class GameState : MonoBehaviour
         enemyCount = 0;
         start = DateTime.Now;
         gameState.Animator.SetBool("playing", true);
-
+        var clip = Resources.Load<AudioClip>("doghowl");
+        AudioSource.PlayClipAtPoint(clip, new Vector3(0, 0, 0));
     }
 
     void SetSurvivalText(string message)
