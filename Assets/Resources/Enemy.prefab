@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   AttackDelay: 1.5
-  AttackStrength: 5
+  AttackStrength: 3
   AttackSpeed: 0.5
   HealthBar: {fileID: 229415542583738450}
   HealthBarCanvas: {fileID: 1690500267520932174}
