@@ -804,7 +804,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251689281}
-  m_LocalRotation: {x: 0.13221067, y: 0.09800892, z: -0.013138122, w: 0.98627687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -812,7 +812,7 @@ Transform:
   - {fileID: 1820163048}
   m_Father: {fileID: 1963945860}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 15.27, y: 11.35, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1251689285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,6 +1203,7 @@ GameObject:
   - component: {fileID: 1654195187}
   - component: {fileID: 1654195186}
   - component: {fileID: 1654195185}
+  - component: {fileID: 1654195188}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1267,6 +1268,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!182 &1654195188
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654195184}
+  m_Enabled: 1
+  m_Mode: 0
+  m_Radius: 20
+  m_WindMain: 1
+  m_WindTurbulence: 1
+  m_WindPulseMagnitude: 0.5
+  m_WindPulseFrequency: 0.01
 --- !u!1001 &1736864790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1377,12 +1392,12 @@ PrefabInstance:
     - target: {fileID: 7010544457269914719, guid: 827c83ac5ea5f4d249ae5b893279d5ee,
         type: 3}
       propertyPath: m_text
-      value: Headforwrds
+      value: Headforwards
       objectReference: {fileID: 0}
     - target: {fileID: 7010544457269914719, guid: 827c83ac5ea5f4d249ae5b893279d5ee,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7010544457269914719, guid: 827c83ac5ea5f4d249ae5b893279d5ee,
         type: 3}
@@ -1624,8 +1639,8 @@ Light:
   m_Color: {r: 1, g: 0.97613764, b: 0.7971698, a: 1}
   m_Intensity: 7
   m_Range: 30
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 50
+  m_InnerSpotAngle: 5
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -1740,7 +1755,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1251689283}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1823,8 +1838,8 @@ MonoBehaviour:
   MaxDistance: 30
   MinDistance: 20
   minInterval: 0.1
-  maxInterval: 1
-  maxEnemies: 20
+  maxInterval: 2
+  maxEnemies: 15
 --- !u!114 &1963945862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1837,7 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9100fa53873d142df99d6fbdf274de44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 120
   HealthText: {fileID: 1801645230}
 --- !u!65 &1963945863
 BoxCollider:
